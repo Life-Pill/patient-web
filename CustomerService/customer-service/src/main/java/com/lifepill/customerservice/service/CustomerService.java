@@ -2,6 +2,7 @@ package com.lifepill.customerservice.service;
 
 import com.lifepill.customerservice.model.Customer;
 import com.lifepill.customerservice.repo.CustomerRepository;
+import com.lifepill.customerservice.util.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,12 @@ public class CustomerService {
 
     //get customer by id
     public Optional<Customer> getCustomer(Long id){
-        return customerRepository.findById(id);
+        Optional<Customer> customer = customerRepository.findById(id);
+        if(customer.isEmpty()){
+            throw new ResourceNotFoundException("Customer with ID " + id + " not found.");
+        }else{
+            return customer;
+        }
     }
 
     //add new customer
@@ -32,7 +38,9 @@ public class CustomerService {
     public Customer updateCustomer(Long id, Customer updatedCustomer){
         Optional<Customer> customer = customerRepository.findById(id);
 
-        if(customer.isPresent()){
+        if(customer.isEmpty()){
+            throw new ResourceNotFoundException("Customer with ID " + id + " not found.");
+        }else{
             Customer existingCustomer = customer.get();
 
             existingCustomer.setCustomerFullName(updatedCustomer.getCustomerFullName());
@@ -47,12 +55,16 @@ public class CustomerService {
 
             return customerRepository.save(existingCustomer);
         }
-
-        return null;
     }
 
     //delete customer
     public void deleteCustomer(Long id){
+        Optional<Customer> customer = customerRepository.findById(id);
+
+        if(customer.isEmpty()){
+            throw new ResourceNotFoundException("Customer with ID " + id + " not found.");
+        }
+
         customerRepository.deleteById(id);
     }
 
