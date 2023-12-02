@@ -19,6 +19,7 @@ public class Customer {
     private String customerMobileNumber;
     @Column(name = "cus_password", nullable = false, length = 200)
     private String customerPassword;
+    private String confirmCustomerPassword;
     @Column(name = "address_street", nullable = false, length = 200)
     private String customerAddressStreet;
     @Column(name = "address_city", nullable = false, length = 200)
@@ -27,21 +28,19 @@ public class Customer {
     private String customerAddressDistrict;
     @Column(name = "nic", nullable = false, unique = true, length = 20)
     private String customerNIC;
-    @Column(name = "date_of_birth", nullable = false)
-    private Date customerDateOfBirth;
 
     public Customer(){}
 
-    public Customer(String customerFullName, String customerEmail, String customerMobileNumber, String customerPassword, String customerAddressStreet, String customerAddressCity, String customerAddressDistrict, String customerNIC, Date customerDateOfBirth) {
+    public Customer(String customerFullName, String customerEmail, String customerMobileNumber, String customerPassword, String confirmCustomerPassword, String customerAddressStreet, String customerAddressCity, String customerAddressDistrict, String customerNIC) {
         this.customerFullName = customerFullName;
         this.customerEmail = customerEmail;
         this.customerMobileNumber = customerMobileNumber;
         this.customerPassword = customerPassword;
+        this.confirmCustomerPassword = confirmCustomerPassword;
         this.customerAddressStreet = customerAddressStreet;
         this.customerAddressCity = customerAddressCity;
         this.customerAddressDistrict = customerAddressDistrict;
         this.customerNIC = customerNIC;
-        this.customerDateOfBirth = customerDateOfBirth;
     }
 
     public Long getCustomerId() {
@@ -64,6 +63,10 @@ public class Customer {
         return customerPassword;
     }
 
+    public String getConfirmCustomerPassword() {
+        return confirmCustomerPassword;
+    }
+
     public String getCustomerAddressStreet() {
         return customerAddressStreet;
     }
@@ -78,10 +81,6 @@ public class Customer {
 
     public String getCustomerNIC() {
         return customerNIC;
-    }
-
-    public Date getCustomerDateOfBirth() {
-        return customerDateOfBirth;
     }
 
     public void setCustomerId(Long customerId) {
@@ -104,6 +103,10 @@ public class Customer {
         this.customerPassword = customerPassword;
     }
 
+    public void setConfirmCustomerPassword(String confirmCustomerPassword) {
+        this.confirmCustomerPassword = confirmCustomerPassword;
+    }
+
     public void setCustomerAddressStreet(String customerAddressStreet) {
         this.customerAddressStreet = customerAddressStreet;
     }
@@ -118,9 +121,5 @@ public class Customer {
 
     public void setCustomerNIC(String customerNIC) {
         this.customerNIC = customerNIC;
-    }
-
-    public void setCustomerDateOfBirth(Date customerDateOfBirth) {
-        this.customerDateOfBirth = customerDateOfBirth;
     }
 }

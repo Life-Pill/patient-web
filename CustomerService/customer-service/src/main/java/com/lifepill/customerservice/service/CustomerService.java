@@ -134,7 +134,6 @@ public class CustomerService {
         existingCustomer.setCustomerAddressCity(updatedCustomer.getCustomerAddressCity());
         existingCustomer.setCustomerAddressDistrict(updatedCustomer.getCustomerAddressDistrict());
         existingCustomer.setCustomerNIC(updatedCustomer.getCustomerNIC());
-        existingCustomer.setCustomerDateOfBirth(updatedCustomer.getCustomerDateOfBirth());
 
         return customerRepository.save(existingCustomer);
     }
