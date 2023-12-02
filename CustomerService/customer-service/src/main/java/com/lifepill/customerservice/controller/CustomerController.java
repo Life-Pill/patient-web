@@ -38,6 +38,11 @@ public class CustomerController {
         return customerService.updateCustomer(id, updatedCustomer);
     }
 
+    @PutMapping("changePassword/{id}")
+    public String updateCustomerPassword(@PathVariable Long id,@RequestBody Customer updatedCustomer){
+        return customerService.updateCustomerPassword(id, updatedCustomer.getCustomerPassword());
+    }
+
     //delete customer
     @DeleteMapping("/{id}")
     public String deleteCustomer(@PathVariable Long id){

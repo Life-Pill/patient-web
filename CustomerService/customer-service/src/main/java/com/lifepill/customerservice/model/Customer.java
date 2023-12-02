@@ -19,7 +19,6 @@ public class Customer {
     private String customerMobileNumber;
     @Column(name = "cus_password", nullable = false, length = 200)
     private String customerPassword;
-    private String confirmCustomerPassword;
     @Column(name = "address_street", nullable = false, length = 200)
     private String customerAddressStreet;
     @Column(name = "address_city", nullable = false, length = 200)
@@ -31,12 +30,11 @@ public class Customer {
 
     public Customer(){}
 
-    public Customer(String customerFullName, String customerEmail, String customerMobileNumber, String customerPassword, String confirmCustomerPassword, String customerAddressStreet, String customerAddressCity, String customerAddressDistrict, String customerNIC) {
+    public Customer(String customerFullName, String customerEmail, String customerMobileNumber, String customerPassword, String customerAddressStreet, String customerAddressCity, String customerAddressDistrict, String customerNIC) {
         this.customerFullName = customerFullName;
         this.customerEmail = customerEmail;
         this.customerMobileNumber = customerMobileNumber;
         this.customerPassword = customerPassword;
-        this.confirmCustomerPassword = confirmCustomerPassword;
         this.customerAddressStreet = customerAddressStreet;
         this.customerAddressCity = customerAddressCity;
         this.customerAddressDistrict = customerAddressDistrict;
@@ -61,10 +59,6 @@ public class Customer {
 
     public String getCustomerPassword() {
         return customerPassword;
-    }
-
-    public String getConfirmCustomerPassword() {
-        return confirmCustomerPassword;
     }
 
     public String getCustomerAddressStreet() {
@@ -101,10 +95,6 @@ public class Customer {
 
     public void setCustomerPassword(String customerPassword) {
         this.customerPassword = customerPassword;
-    }
-
-    public void setConfirmCustomerPassword(String confirmCustomerPassword) {
-        this.confirmCustomerPassword = confirmCustomerPassword;
     }
 
     public void setCustomerAddressStreet(String customerAddressStreet) {

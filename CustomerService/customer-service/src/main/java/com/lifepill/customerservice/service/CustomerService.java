@@ -72,6 +72,7 @@ public class CustomerService {
             throw new MissingParameterException("NIC Number cannot be Empty");
         }
 
+        customer.setCustomerPassword(hashPassword(customer.getCustomerPassword()));
         return customerRepository.save(customer);
     }
 
@@ -129,13 +130,31 @@ public class CustomerService {
         existingCustomer.setCustomerFullName(updatedCustomer.getCustomerFullName());
         existingCustomer.setCustomerEmail(updatedCustomer.getCustomerEmail());
         existingCustomer.setCustomerMobileNumber(updatedCustomer.getCustomerMobileNumber());
-        existingCustomer.setCustomerPassword(updatedCustomer.getCustomerPassword());
         existingCustomer.setCustomerAddressStreet(updatedCustomer.getCustomerAddressStreet());
         existingCustomer.setCustomerAddressCity(updatedCustomer.getCustomerAddressCity());
         existingCustomer.setCustomerAddressDistrict(updatedCustomer.getCustomerAddressDistrict());
         existingCustomer.setCustomerNIC(updatedCustomer.getCustomerNIC());
 
         return customerRepository.save(existingCustomer);
+    }
+
+    public String updateCustomerPassword(Long id, String newPassword){
+        Optional<Customer> customer = customerRepository.findById(id);
+
+        // Customer Id not found error handling
+        if(customer.isEmpty()){
+            throw new ResourceNotFoundException("Customer with ID " + id + " not found.");
+        }
+
+        if(newPassword.isEmpty()){
+            throw new MissingParameterException("New Password cannot be Empty");
+        }
+
+        Customer existingCustomer = customer.get();
+
+        existingCustomer.setCustomerPassword(hashPassword(newPassword));
+        customerRepository.save(existingCustomer);
+        return "Password Successfully Updated";
     }
 
     //delete customer
@@ -153,5 +172,10 @@ public class CustomerService {
     //delete all customers
     public void deleteAllCustomers(){
         customerRepository.deleteAll();
+    }
+
+    //hashing the password
+    public String hashPassword(String password){
+        return password;
     }
 }
