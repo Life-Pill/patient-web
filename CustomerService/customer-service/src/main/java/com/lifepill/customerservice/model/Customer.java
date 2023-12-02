@@ -1,5 +1,6 @@
 package com.lifepill.customerservice.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ public class Customer {
     @Column(name = "mobile_number", nullable = false, unique = true, length = 50)
     private String customerMobileNumber;
     @Column(name = "cus_password", nullable = false, length = 200)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String customerPassword;
     @Column(name = "address_street", nullable = false, length = 200)
     private String customerAddressStreet;
