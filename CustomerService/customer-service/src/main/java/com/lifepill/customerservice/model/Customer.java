@@ -28,6 +28,7 @@ public class Customer {
     @Column(name = "address_district", nullable = false, length = 100)
     private String customerAddressDistrict;
     @Column(name = "nic", nullable = false, unique = true, length = 20)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String customerNIC;
 
     public Customer(){}
