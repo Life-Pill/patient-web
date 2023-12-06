@@ -1,5 +1,6 @@
 package com.lifepill.customerservice.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,7 @@ public class SubCustomer {
     @Column(name = "full_name", nullable = false, length = 200)
     private String subCustomerFullName;
     @Column(name = "nic", nullable = true, unique = true, length = 20)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String subCustomerNIC;
 
     public SubCustomer(){
