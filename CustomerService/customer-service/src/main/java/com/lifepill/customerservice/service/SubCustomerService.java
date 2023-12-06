@@ -1,8 +1,8 @@
 package com.lifepill.customerservice.service;
 
-import com.lifepill.customerservice.model.Customer;
 import com.lifepill.customerservice.model.SubCustomer;
 import com.lifepill.customerservice.repo.SubCustomerRepository;
+import com.lifepill.customerservice.util.MissingParameterException;
 import com.lifepill.customerservice.util.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +38,23 @@ public class SubCustomerService {
     }
 
     //add a new sub customer
-    public SubCustomer addNewSubCustomer(SubCustomer newSubCustomer){
-        return subCustomerRepository.save(newSubCustomer);
+    public SubCustomer addNewSubCustomer(SubCustomer subCustomer){
+        //Empty full name error handling
+        if(subCustomer.getSubCustomerFullName().isEmpty()){
+            throw new MissingParameterException("Full Name cannot be Empty");
+        }
+
+        //Empty NIC number error handling
+        if(subCustomer.getSubCustomerNIC().isEmpty()){
+            throw new MissingParameterException("NIC Number cannot be Empty");
+        }
+
+        //Empty Parent Id error handling
+        if(subCustomer.getParentId() == null){
+            throw new MissingParameterException("Parent Id cannot be Empty");
+        }
+
+        return subCustomerRepository.save(subCustomer);
     }
 
     //update a sub customer
@@ -54,6 +69,16 @@ public class SubCustomerService {
 
         if(!(existingSubCustomer.getParentId().equals(parentId))){
             throw new ResourceNotFoundException("Sub Customer with ID " + childId + " not found.");
+        }
+
+        //Empty full name error handling
+        if(updatedSubCustomer.getSubCustomerFullName().isEmpty()){
+            throw new MissingParameterException("Full Name cannot be Empty");
+        }
+
+        //Empty NIC number error handling
+        if(updatedSubCustomer.getSubCustomerNIC().isEmpty()){
+            throw new MissingParameterException("NIC Number cannot be Empty");
         }
 
         existingSubCustomer.setSubCustomerFullName(updatedSubCustomer.getSubCustomerFullName());

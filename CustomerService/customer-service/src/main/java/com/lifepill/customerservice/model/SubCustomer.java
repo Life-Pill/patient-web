@@ -1,6 +1,5 @@
 package com.lifepill.customerservice.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
