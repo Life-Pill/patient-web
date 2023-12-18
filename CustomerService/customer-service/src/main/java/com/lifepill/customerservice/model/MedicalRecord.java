@@ -3,6 +3,7 @@ package com.lifepill.customerservice.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -15,21 +16,22 @@ public class MedicalRecord {
     private List<HealthCondition> healthConditions;
     private List<String> allergies;
     private List<LaboratoryTest> laboratories;
-    private Date createdDate;
-    private Date updatedDate;
+    private LocalDateTime createdOn;
+    private LocalDateTime updatedOn;
 
     public MedicalRecord() {
-
+        this.createdOn = LocalDateTime.now();
+        this.updatedOn = LocalDateTime.now();
     }
 
-    public MedicalRecord(int patientId, int patientAge, List<HealthCondition> healthConditions, List<String> allergies, List<LaboratoryTest> laboratories, Date createdDate, Date updatedDate) {
+    public MedicalRecord(int patientId, int patientAge, List<HealthCondition> healthConditions, List<String> allergies, List<LaboratoryTest> laboratories) {
         this.patientId = patientId;
         this.patientAge = patientAge;
         this.healthConditions = healthConditions;
         this.allergies = allergies;
         this.laboratories = laboratories;
-        this.createdDate = createdDate;
-        this.updatedDate = updatedDate;
+        this.createdOn = LocalDateTime.now();
+        this.updatedOn = LocalDateTime.now();
     }
 
     public String getId() {
@@ -56,12 +58,12 @@ public class MedicalRecord {
         return laboratories;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
     }
 
-    public Date getUpdatedDate() {
-        return updatedDate;
+    public LocalDateTime getUpdatedOn() {
+        return updatedOn;
     }
 
     public void setId(String id) {
@@ -88,11 +90,11 @@ public class MedicalRecord {
         this.laboratories = laboratories;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = LocalDateTime.now();
     }
 
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
+    public void setUpdatedOn(LocalDateTime updatedOn) {
+        this.updatedOn = LocalDateTime.now();
     }
 }
