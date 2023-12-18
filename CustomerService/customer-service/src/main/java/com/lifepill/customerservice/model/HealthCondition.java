@@ -1,11 +1,11 @@
 package com.lifepill.customerservice.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class HealthCondition {
     private String healthConditionName;
-    private Date treatmentStartedDate;
+    private LocalDate treatmentStartedDate;
     private List<Medication> medication;
     private ChannelingDetails channelingDetails;
 
@@ -14,7 +14,7 @@ public class HealthCondition {
 
     }
 
-    public HealthCondition(String healthConditionName, Date treatmentStartedDate, List<Medication> medication, ChannelingDetails channelingDetails) {
+    public HealthCondition(String healthConditionName, LocalDate treatmentStartedDate, List<Medication> medication, ChannelingDetails channelingDetails) {
         this.healthConditionName = healthConditionName;
         this.treatmentStartedDate = treatmentStartedDate;
         this.medication = medication;
@@ -30,11 +30,11 @@ public class HealthCondition {
         this.healthConditionName = healthConditionName;
     }
 
-    public Date getTreatmentStartedDate() {
+    public LocalDate getTreatmentStartedDate() {
         return treatmentStartedDate;
     }
 
-    public void setTreatmentStartedDate(Date treatmentStartedDate) {
+    public void setTreatmentStartedDate(LocalDate treatmentStartedDate) {
         this.treatmentStartedDate = treatmentStartedDate;
     }
 
@@ -60,15 +60,15 @@ public class HealthCondition {
         private String dosage;
         private String frequency;
         private boolean drugUsageStatus;
-        private Date startedDate;
-        private Date stoppedDate;
+        private LocalDate startedDate;
+        private LocalDate stoppedDate;
 
         // constructor
         public Medication() {
 
         }
 
-        public Medication(String drugName, String dosage, String frequency, boolean drugUsageStatus, Date startedDate, Date stoppedDate) {
+        public Medication(String drugName, String dosage, String frequency, boolean drugUsageStatus, LocalDate startedDate, LocalDate stoppedDate) {
             this.drugName = drugName;
             this.dosage = dosage;
             this.frequency = frequency;
@@ -110,19 +110,19 @@ public class HealthCondition {
             this.drugUsageStatus = drugUsageStatus;
         }
 
-        public Date getStartedDate() {
+        public LocalDate getStartedDate() {
             return startedDate;
         }
 
-        public void setStartedDate(Date startedDate) {
+        public void setStartedDate(LocalDate startedDate) {
             this.startedDate = startedDate;
         }
 
-        public Date getStoppedDate() {
+        public LocalDate getStoppedDate() {
             return stoppedDate;
         }
 
-        public void setStoppedDate(Date stoppedDate) {
+        public void setStoppedDate(LocalDate stoppedDate) {
             this.stoppedDate = stoppedDate;
         }
     }
@@ -130,15 +130,15 @@ public class HealthCondition {
     //ChannelingDetails class used in HealthCondition class
     public static class ChannelingDetails {
         private String doctorName;
-        private Date lastDoctorVisit;
-        private Date nextDoctorVisit;
+        private LocalDate lastDoctorVisit;
+        private LocalDate nextDoctorVisit;
 
         // constructor
         public ChannelingDetails() {
 
         }
 
-        public ChannelingDetails(String doctorName, Date lastDoctorVisit, Date nextDoctorVisit) {
+        public ChannelingDetails(String doctorName, LocalDate lastDoctorVisit, LocalDate nextDoctorVisit) {
             this.doctorName = doctorName;
             this.lastDoctorVisit = lastDoctorVisit;
             this.nextDoctorVisit = nextDoctorVisit;
@@ -153,19 +153,19 @@ public class HealthCondition {
             this.doctorName = doctorName;
         }
 
-        public Date getLastDoctorVisit() {
+        public LocalDate getLastDoctorVisit() {
             return lastDoctorVisit;
         }
 
-        public void setLastDoctorVisit(Date lastDoctorVisit) {
+        public void setLastDoctorVisit(LocalDate lastDoctorVisit) {
             this.lastDoctorVisit = lastDoctorVisit;
         }
 
-        public Date getNextDoctorVisit() {
+        public LocalDate getNextDoctorVisit() {
             return nextDoctorVisit;
         }
 
-        public void setNextDoctorVisit(Date nextDoctorVisit) {
+        public void setNextDoctorVisit(LocalDate nextDoctorVisit) {
             this.nextDoctorVisit = nextDoctorVisit;
         }
     }
