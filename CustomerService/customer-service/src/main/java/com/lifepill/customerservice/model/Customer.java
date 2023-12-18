@@ -3,7 +3,7 @@ package com.lifepill.customerservice.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-import java.util.Date;
+//import java.util.Date;
 
 @Entity
 @Table(name = "customer")
@@ -31,9 +31,12 @@ public class Customer {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String customerNIC;
 
-    public Customer(){}
+    public Customer() {
+    }
 
-    public Customer(String customerFullName, String customerEmail, String customerMobileNumber, String customerPassword, String customerAddressStreet, String customerAddressCity, String customerAddressDistrict, String customerNIC) {
+    public Customer(String customerFullName, String customerEmail, String customerMobileNumber, String customerPassword,
+            String customerAddressStreet, String customerAddressCity, String customerAddressDistrict,
+            String customerNIC) {
         this.customerFullName = customerFullName;
         this.customerEmail = customerEmail;
         this.customerMobileNumber = customerMobileNumber;
