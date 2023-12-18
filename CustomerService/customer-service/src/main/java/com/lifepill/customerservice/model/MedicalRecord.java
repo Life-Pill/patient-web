@@ -1,6 +1,6 @@
 package com.lifepill.customerservice.model;
 
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.List;
 @Document(collection = "medicalRecords")
 public class MedicalRecord {
     @Id
-    private String recordID;
+    private String id;
     private int patientId;
     private int patientAge;
     private List<HealthCondition> healthConditions;
@@ -32,8 +32,8 @@ public class MedicalRecord {
         this.updatedDate = updatedDate;
     }
 
-    public String getRecordID() {
-        return recordID;
+    public String getId() {
+        return id;
     }
 
     public int getPatientId() {
@@ -64,8 +64,8 @@ public class MedicalRecord {
         return updatedDate;
     }
 
-    public void setRecordID(String recordID) {
-        this.recordID = recordID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setPatientId(int patientId) {
