@@ -10,7 +10,8 @@ import java.util.List;
 public class MedicalRecord {
     @Id
     private String id;
-    private int patientId;
+    private boolean subAccount;
+    private Long patientId;
     private int patientAge;
     private List<HealthCondition> healthConditions;
     private List<String> allergies;
@@ -23,7 +24,8 @@ public class MedicalRecord {
         this.updatedOn = LocalDateTime.now();
     }
 
-    public MedicalRecord(int patientId, int patientAge, List<HealthCondition> healthConditions, List<String> allergies, List<LaboratoryTest> laboratories) {
+    public MedicalRecord(boolean subAccount, Long patientId, int patientAge, List<HealthCondition> healthConditions, List<String> allergies, List<LaboratoryTest> laboratories) {
+        this.subAccount = subAccount;
         this.patientId = patientId;
         this.patientAge = patientAge;
         this.healthConditions = healthConditions;
@@ -37,7 +39,11 @@ public class MedicalRecord {
         return id;
     }
 
-    public int getPatientId() {
+    public boolean getSubAccount() {
+        return subAccount;
+    }
+
+    public Long getPatientId() {
         return patientId;
     }
 
@@ -69,7 +75,11 @@ public class MedicalRecord {
         this.id = id;
     }
 
-    public void setPatientId(int patientId) {
+    public void setSubAccount(boolean isSubAccount) {
+        subAccount = isSubAccount;
+    }
+
+    public void setPatientId(Long patientId) {
         this.patientId = patientId;
     }
 
