@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("medicalRecords")
+@RequestMapping("/medicalRecords")
 public class MedicalRecordController {
     @Autowired
     private MedicalRecordService medicalRecordService;
