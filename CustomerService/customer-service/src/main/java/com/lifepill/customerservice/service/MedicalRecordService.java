@@ -34,4 +34,42 @@ public class MedicalRecordService {
     public MedicalRecord addNewMedicalRecord(MedicalRecord newMedicalRecord){
         return medicalRecordRepository.save(newMedicalRecord);
     }
+
+    //update a medical record
+    public MedicalRecord updateMedicalRecord(Long patientId, String recordId, MedicalRecord updatedMedicalRecord){
+        Optional<MedicalRecord> medicalRecord = medicalRecordRepository.findById(recordId);
+
+        if(medicalRecord.isEmpty()){
+            throw new ResourceNotFoundException("Medical Record with ID " + recordId + " not found.");
+        }
+
+        MedicalRecord existingMedicalRecord = medicalRecord.get();
+
+        if(!patientId.equals(existingMedicalRecord.getPatientId())){
+            throw new ResourceNotFoundException("Medical Record with ID " + recordId + " not found.");
+        }
+
+        medicalRecordRepository.deleteById(recordId);
+        updatedMedicalRecord.setId(existingMedicalRecord.getId());
+        medicalRecordRepository.save(updatedMedicalRecord);
+
+        return updatedMedicalRecord;
+    }
+
+    //delete a medical record
+    public void deleteMedicalRecord(Long patientId, String recordId){
+        Optional<MedicalRecord> medicalRecord = medicalRecordRepository.findById(recordId);
+
+        if(medicalRecord.isEmpty()){
+            throw new ResourceNotFoundException("Medical Record with ID " + recordId + " not found.");
+        }
+
+        MedicalRecord existingMedicalRecord = medicalRecord.get();
+
+        if(!patientId.equals(existingMedicalRecord.getPatientId())){
+            throw new ResourceNotFoundException("Medical Record with ID " + recordId + " not found.");
+        }
+
+        medicalRecordRepository.deleteById(recordId);
+    }
 }

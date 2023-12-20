@@ -24,4 +24,18 @@ public class MedicalRecordController {
     public MedicalRecord addNewMedicalRecord(@RequestBody MedicalRecord newMedicalRecord){
         return medicalRecordService.addNewMedicalRecord(newMedicalRecord);
     }
+
+    //update a medical record
+    @PutMapping("/{patientId}/{recordId}")
+    public MedicalRecord updateMedicalRecord(@PathVariable Long patientId,@PathVariable String recordId,@RequestBody MedicalRecord updatedMedicalRecord){
+        return medicalRecordService.updateMedicalRecord(patientId, recordId, updatedMedicalRecord);
+    }
+
+    //delete a medical record
+    @DeleteMapping("/{patientId}/{recordId}")
+    public String deleteMedicalRecord(@PathVariable Long patientId,@PathVariable String recordId){
+        medicalRecordService.deleteMedicalRecord(patientId, recordId);
+
+        return "Medical Record Deleted Successfully";
+    }
 }
