@@ -1,6 +1,7 @@
 package com.lifepill.customerservice.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ public class MedicalRecord {
     @Id
     private String id;
     private boolean subAccount;
+    @Indexed(unique = true)
     private Long patientId;
     private int patientAge;
     private List<HealthCondition> healthConditions;
@@ -100,10 +102,10 @@ public class MedicalRecord {
     }
 
     public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = LocalDateTime.now();
+        this.createdOn = createdOn;
     }
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
-        this.updatedOn = LocalDateTime.now();
+        this.updatedOn = updatedOn;
     }
 }

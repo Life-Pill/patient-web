@@ -51,6 +51,7 @@ public class MedicalRecordService {
 
         medicalRecordRepository.deleteById(recordId);
         updatedMedicalRecord.setId(existingMedicalRecord.getId());
+        updatedMedicalRecord.setCreatedOn(existingMedicalRecord.getCreatedOn());
         medicalRecordRepository.save(updatedMedicalRecord);
 
         return updatedMedicalRecord;
