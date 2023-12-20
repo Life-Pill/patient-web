@@ -1,5 +1,6 @@
 package com.lifepill.customerservice.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +13,6 @@ public class MedicalRecord {
     @Id
     private String id;
     private boolean subAccount;
-    @Indexed(unique = true)
     private Long patientId;
     private int patientAge;
     private List<HealthCondition> healthConditions;

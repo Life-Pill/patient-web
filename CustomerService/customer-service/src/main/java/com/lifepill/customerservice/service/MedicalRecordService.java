@@ -2,6 +2,7 @@ package com.lifepill.customerservice.service;
 
 import com.lifepill.customerservice.model.MedicalRecord;
 import com.lifepill.customerservice.repo.MedicalRecordRepository;
+import com.lifepill.customerservice.util.MissingParameterException;
 import com.lifepill.customerservice.util.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,11 @@ public class MedicalRecordService {
 
     //add new medical record
     public MedicalRecord addNewMedicalRecord(MedicalRecord newMedicalRecord){
+        //Empty patientId error handling
+        if(newMedicalRecord.getPatientId().toString().isEmpty()){
+            throw new MissingParameterException("Patient ID cannot be Empty");
+        }
+
         return medicalRecordRepository.save(newMedicalRecord);
     }
 
@@ -52,6 +58,12 @@ public class MedicalRecordService {
         medicalRecordRepository.deleteById(recordId);
         updatedMedicalRecord.setId(existingMedicalRecord.getId());
         updatedMedicalRecord.setCreatedOn(existingMedicalRecord.getCreatedOn());
+
+        //Empty patientId error handling
+        if(updatedMedicalRecord.getPatientId().toString().isEmpty()){
+            throw new MissingParameterException("Patient ID cannot be Empty");
+        }
+
         medicalRecordRepository.save(updatedMedicalRecord);
 
         return updatedMedicalRecord;
