@@ -17,10 +17,9 @@ public class Prescription {
 
     }
 
-    public Prescription(Long customerId, String title, Binary image) {
+    public Prescription(Long customerId, String title) {
         this.customerId = customerId;
         this.prescriptionTitle = title;
-        this.prescriptionImage = image;
     }
 
     public String getId() {

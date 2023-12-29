@@ -15,8 +15,8 @@ public class PrescriptionService {
     @Autowired
     private PrescriptionRepository prescriptionRepository;
 
-    public String addPrescription(String title, MultipartFile file) throws IOException {
-        Prescription prescription = new Prescription();
+    public String addPrescription(Long customerId, String title, MultipartFile file) throws IOException {
+        Prescription prescription = new Prescription(customerId, title);
         prescription.setPrescriptionImage(
                 new Binary(BsonBinarySubType.BINARY, file.getBytes()));
         prescription = prescriptionRepository.insert(prescription); return prescription.getId();
