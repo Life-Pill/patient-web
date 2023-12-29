@@ -1,5 +1,6 @@
 package com.lifepill.customerservice.model;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,17 +9,18 @@ public class Prescription {
     @Id
     private String id;
     private Long customerId;
-    private String filename;
-    private String contentType;
+    private String prescriptionTitle;
+
+    private Binary prescriptionImage;
 
     public Prescription() {
 
     }
 
-    public Prescription(Long customerId, String filename, String contentType) {
+    public Prescription(Long customerId, String title, Binary image) {
         this.customerId = customerId;
-        this.filename = filename;
-        this.contentType = contentType;
+        this.prescriptionTitle = title;
+        this.prescriptionImage = image;
     }
 
     public String getId() {
@@ -37,19 +39,19 @@ public class Prescription {
         this.customerId = customerId;
     }
 
-    public String getFilename() {
-        return filename;
+    public String getPrescriptionTitle() {
+        return prescriptionTitle;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setPrescriptionTitle(String prescriptionTitle) {
+        this.prescriptionTitle = prescriptionTitle;
     }
 
-    public String getContentType() {
-        return contentType;
+    public Binary getPrescriptionImage() {
+        return prescriptionImage;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
+    public void setPrescriptionImage(Binary prescriptionImage) {
+        this.prescriptionImage = prescriptionImage;
     }
 }
