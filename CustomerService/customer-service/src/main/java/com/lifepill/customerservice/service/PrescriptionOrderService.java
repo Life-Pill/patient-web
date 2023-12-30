@@ -20,8 +20,7 @@ public class PrescriptionOrderService {
     @Autowired
     private PrescriptionOrderRepository prescriptionOrderRepository;
 
-//    @Autowired
-//    private PrescriptionService prescriptionService;
+    //endpoints for the admin side use
 
     //get all the orders
     public List<PrescriptionOrder> getAllPrescriptionOrders(){
@@ -75,6 +74,31 @@ public class PrescriptionOrderService {
         prescriptionOrderRepository.deleteById(prescriptionOrderId);
 
         template.delete(new Query(Criteria.where("_id").is(existingPrescriptionOrder.getPrescriptionId())));
-//        prescriptionService.deletePrescription(existingPrescriptionOrder.getPrescriptionId());
+    }
+
+    //endpoints for the customer side use
+
+    //get all my prescription orders
+    public List<PrescriptionOrder> getAllMyPrescriptionOrders(Long customerId){
+        return prescriptionOrderRepository.findByCustomerId(customerId);
+    }
+
+    //delete my prescription order
+    public void deleteMyPrescriptionOrder(Long customerId, String prescriptionOrderId){
+        Optional<PrescriptionOrder> prescriptionOrder = prescriptionOrderRepository.findById(prescriptionOrderId);
+
+        if(prescriptionOrder.isEmpty()){
+            throw new ResourceNotFoundException("Order with ID " + prescriptionOrderId + " not found.");
+        }
+
+        PrescriptionOrder existingPrescriptionOrder = prescriptionOrder.get();
+
+        if(!(existingPrescriptionOrder.getCustomerId().equals(customerId))){
+            throw new ResourceNotFoundException("Order with ID " + prescriptionOrderId + " not found.");
+        }
+
+        prescriptionOrderRepository.deleteById(prescriptionOrderId);
+
+        template.delete(new Query(Criteria.where("_id").is(existingPrescriptionOrder.getPrescriptionId())));
     }
 }
