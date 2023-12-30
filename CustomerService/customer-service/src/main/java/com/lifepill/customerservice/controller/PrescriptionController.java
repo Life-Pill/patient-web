@@ -19,9 +19,9 @@ public class PrescriptionController {
     @Autowired
     private PrescriptionService prescriptionService;
 
-    @PostMapping
-    public ResponseEntity<?> upload(@RequestParam("file")MultipartFile file) throws IOException {
-        return new ResponseEntity<>(prescriptionService.addPrescription(file), HttpStatus.OK);
+    @PostMapping("/{customerId}")
+    public ResponseEntity<?> upload(@RequestParam("file")MultipartFile file,@PathVariable Long customerId) throws IOException {
+        return new ResponseEntity<>(prescriptionService.addPrescription(file, customerId), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

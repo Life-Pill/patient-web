@@ -1,6 +1,7 @@
 package com.lifepill.customerservice.service;
 
 import com.lifepill.customerservice.model.Prescription;
+import com.lifepill.customerservice.model.PrescriptionOrder;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -23,13 +24,20 @@ public class PrescriptionService {
     @Autowired
     private GridFsOperations operations;
 
+    @Autowired
+    private PrescriptionOrderService prescriptionOrderService;
+
     //add new prescription
-    public String addPrescription(MultipartFile upload) throws IOException {
+    public String addPrescription(MultipartFile upload, Long customerId) throws IOException {
 
         DBObject metadata = new BasicDBObject();
         metadata.put("fileSize", upload.getSize());
 
         Object fileID = template.store(upload.getInputStream(), upload.getOriginalFilename(), upload.getContentType(), metadata);
+
+        PrescriptionOrder prescriptionOrder = new PrescriptionOrder(customerId, fileID.toString(), true);
+
+        prescriptionOrderService.addNewPrescriptionOrder(prescriptionOrder);
 
         return fileID.toString();
     }
