@@ -3,25 +3,34 @@ package com.lifepill.customerservice.controller;
 import com.lifepill.customerservice.model.Prescription;
 import com.lifepill.customerservice.service.PrescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/prescriptions")
+@CrossOrigin("*")
+@RequestMapping("prescriptions")
 public class PrescriptionController {
     @Autowired
     private PrescriptionService prescriptionService;
 
-    @PostMapping("/{customerId}/{title}")
-    public String addPrescription(@PathVariable Long customerId, @PathVariable String title, @RequestBody MultipartFile image) throws IOException {
-        String id = prescriptionService.addPrescription(customerId, title, image);
-        return "redirect:/photos/" + id;
+    @PostMapping
+    public ResponseEntity<?> upload(@RequestParam("file")MultipartFile file) throws IOException {
+        return new ResponseEntity<>(prescriptionService.addPrescription(file), HttpStatus.OK);
     }
 
-    @GetMapping
-    public Prescription getPrescription(@PathVariable String id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<ByteArrayResource> download(@PathVariable String id) throws IOException {
         Prescription prescription = prescriptionService.getPrescription(id);
-        return prescription;
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(prescription.getFileType() ))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + prescription.getFileName() + "\"")
+                .body(new ByteArrayResource(prescription.getFile()));
     }
 }

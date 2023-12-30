@@ -1,56 +1,47 @@
 package com.lifepill.customerservice.model;
 
-import org.bson.types.Binary;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "prescriptions")
 public class Prescription {
-    @Id
-    private String id;
-    private Long customerId;
-    private String prescriptionTitle;
-
-    private Binary prescriptionImage;
+    private String fileName;
+    private String fileType;
+    private String fileSize;
+    private byte[] file;
 
     public Prescription() {
 
     }
 
-    public Prescription(Long customerId, String title) {
-        this.customerId = customerId;
-        this.prescriptionTitle = title;
+    public String getFileName() {
+        return fileName;
     }
 
-    public String getId() {
-        return id;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getFileType() {
+        return fileType;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public String getFileSize() {
+        return fileSize;
     }
 
-    public String getPrescriptionTitle() {
-        return prescriptionTitle;
+    public void setFileSize(String fileSize) {
+        this.fileSize = fileSize;
     }
 
-    public void setPrescriptionTitle(String prescriptionTitle) {
-        this.prescriptionTitle = prescriptionTitle;
+    public byte[] getFile() {
+        return file;
     }
 
-    public Binary getPrescriptionImage() {
-        return prescriptionImage;
-    }
-
-    public void setPrescriptionImage(Binary prescriptionImage) {
-        this.prescriptionImage = prescriptionImage;
+    public void setFile(byte[] file) {
+        this.file = file;
     }
 }
