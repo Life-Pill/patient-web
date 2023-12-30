@@ -4,6 +4,9 @@ import com.lifepill.customerservice.model.PrescriptionOrder;
 import com.lifepill.customerservice.repo.PrescriptionOrderRepository;
 import com.lifepill.customerservice.util.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +15,13 @@ import java.util.Optional;
 @Service
 public class PrescriptionOrderService {
     @Autowired
-    private PrescriptionOrderRepository prescriptionOrderRepository;
+    private GridFsTemplate template;
 
     @Autowired
-    private PrescriptionService prescriptionService;
+    private PrescriptionOrderRepository prescriptionOrderRepository;
+
+//    @Autowired
+//    private PrescriptionService prescriptionService;
 
     //get all the orders
     public List<PrescriptionOrder> getAllPrescriptionOrders(){
@@ -67,6 +73,8 @@ public class PrescriptionOrderService {
         PrescriptionOrder existingPrescriptionOrder = prescriptionOrder.get();
 
         prescriptionOrderRepository.deleteById(prescriptionOrderId);
-        prescriptionService.deletePrescription(existingPrescriptionOrder.getPrescriptionId());
+
+        template.delete(new Query(Criteria.where("_id").is(existingPrescriptionOrder.getPrescriptionId())));
+//        prescriptionService.deletePrescription(existingPrescriptionOrder.getPrescriptionId());
     }
 }
