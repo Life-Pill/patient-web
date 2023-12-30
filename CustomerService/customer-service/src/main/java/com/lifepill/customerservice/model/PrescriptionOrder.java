@@ -49,7 +49,7 @@ public class PrescriptionOrder {
         this.prescriptionId = prescriptionId;
     }
 
-    public boolean isOrderStatus() {
+    public boolean getOrderStatus() {
         return orderStatus;
     }
 

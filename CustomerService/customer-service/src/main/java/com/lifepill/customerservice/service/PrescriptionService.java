@@ -60,4 +60,10 @@ public class PrescriptionService {
 
         return prescription;
     }
+
+    //delete a prescription
+    //this will be called inside the PrescriptionOrderService class when delete a prescription order
+    public void deletePrescription(String prescriptionId){
+        template.delete(new Query(Criteria.where("_id").is(prescriptionId)));
+    }
 }
