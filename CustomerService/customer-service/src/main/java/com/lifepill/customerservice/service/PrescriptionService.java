@@ -48,8 +48,6 @@ public class PrescriptionService {
             prescription.setFileSize( gridFSFile.getMetadata().get("fileSize").toString() );
 
             prescription.setFile( IOUtils.toByteArray(operations.getResource(gridFSFile).getInputStream()) );
-
-//            prescription.setFile((operations.getResource(gridFSFile).getInputStream()).readAllBytes());
         }
 
         return prescription;
