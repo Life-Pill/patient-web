@@ -1,11 +1,17 @@
 package com.lifepill.customerservice.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Document(collection = "prescriptionOrders")
+@Data
+@AllArgsConstructor
+@Builder
 public class PrescriptionOrder {
     @Id
     private String id;
@@ -23,45 +29,5 @@ public class PrescriptionOrder {
         this.prescriptionId = prescriptionId;
         this.orderStatus = orderStatus;
         this.createdOn = LocalDateTime.now();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getPrescriptionId() {
-        return prescriptionId;
-    }
-
-    public void setPrescriptionId(String prescriptionId) {
-        this.prescriptionId = prescriptionId;
-    }
-
-    public boolean getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(boolean orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public LocalDateTime getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
     }
 }

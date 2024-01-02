@@ -54,7 +54,7 @@ public class PrescriptionOrderService {
 
         PrescriptionOrder existingPrescriptionOrder = prescriptionOrder.get();
 
-        existingPrescriptionOrder.setOrderStatus(updatedPrescriptionOrder.getOrderStatus());
+        existingPrescriptionOrder.setOrderStatus(updatedPrescriptionOrder.isOrderStatus());
 
         prescriptionOrderRepository.save(existingPrescriptionOrder);
 
