@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("prescriptions")
+@RequestMapping("prescriptionImages")
 public class PrescriptionImageController {
     @Autowired
     private PrescriptionImageService prescriptionService;
