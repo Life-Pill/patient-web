@@ -1,19 +1,22 @@
 package com.lifepill.customerservice.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "prescriptions")
+@Document(collection = "savedPrescriptions")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Prescription {
-    private String fileName;
-    private String fileType;
-    private String fileSize;
-    private byte[] file;
+    @Id
+    private String id;
+    private Long customerId;
+    private String prescriptionId;
+    private String description;
 }

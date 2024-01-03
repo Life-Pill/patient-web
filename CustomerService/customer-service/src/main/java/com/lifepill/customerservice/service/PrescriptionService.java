@@ -1,6 +1,6 @@
 package com.lifepill.customerservice.service;
 
-import com.lifepill.customerservice.model.Prescription;
+import com.lifepill.customerservice.model.PrescriptionImage;
 import com.lifepill.customerservice.model.PrescriptionOrder;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -27,13 +27,14 @@ public class PrescriptionService {
     @Autowired
     private PrescriptionOrderService prescriptionOrderService;
 
-    //add new prescription
+    // add new prescription
     public String addPrescription(MultipartFile upload, Long customerId) throws IOException {
 
         DBObject metadata = new BasicDBObject();
         metadata.put("fileSize", upload.getSize());
 
-        Object fileID = template.store(upload.getInputStream(), upload.getOriginalFilename(), upload.getContentType(), metadata);
+        Object fileID = template.store(upload.getInputStream(), upload.getOriginalFilename(), upload.getContentType(),
+                metadata);
 
         PrescriptionOrder prescriptionOrder = new PrescriptionOrder(customerId, fileID.toString(), true);
 
@@ -42,28 +43,29 @@ public class PrescriptionService {
         return fileID.toString();
     }
 
-    public Prescription getPrescription(String id) throws IOException {
+    public PrescriptionImage getPrescription(String id) throws IOException {
 
-        GridFSFile gridFSFile = template.findOne( new Query(Criteria.where("_id").is(id)) );
+        GridFSFile gridFSFile = template.findOne(new Query(Criteria.where("_id").is(id)));
 
-        Prescription prescription = new Prescription();
+        PrescriptionImage prescription = new PrescriptionImage();
 
         if (gridFSFile != null && gridFSFile.getMetadata() != null) {
-            prescription.setFileName( gridFSFile.getFilename() );
+            prescription.setFileName(gridFSFile.getFilename());
 
-            prescription.setFileType( gridFSFile.getMetadata().get("_contentType").toString() );
+            prescription.setFileType(gridFSFile.getMetadata().get("_contentType").toString());
 
-            prescription.setFileSize( gridFSFile.getMetadata().get("fileSize").toString() );
+            prescription.setFileSize(gridFSFile.getMetadata().get("fileSize").toString());
 
-            prescription.setFile( IOUtils.toByteArray(operations.getResource(gridFSFile).getInputStream()) );
+            prescription.setFile(IOUtils.toByteArray(operations.getResource(gridFSFile).getInputStream()));
         }
 
         return prescription;
     }
 
-    //delete a prescription
-    //this will be called inside the PrescriptionOrderService class when delete a prescription order
-    public void deletePrescription(String prescriptionId){
+    // delete a prescription
+    // this will be called inside the PrescriptionOrderService class when delete a
+    // prescription order
+    public void deletePrescription(String prescriptionId) {
         template.delete(new Query(Criteria.where("_id").is(prescriptionId)));
     }
 }

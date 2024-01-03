@@ -1,6 +1,6 @@
 package com.lifepill.customerservice.controller;
 
-import com.lifepill.customerservice.model.Prescription;
+import com.lifepill.customerservice.model.PrescriptionImage;
 import com.lifepill.customerservice.service.PrescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -20,16 +20,17 @@ public class PrescriptionController {
     private PrescriptionService prescriptionService;
 
     @PostMapping("/{customerId}")
-    public ResponseEntity<?> upload(@RequestParam("file")MultipartFile file,@PathVariable Long customerId) throws IOException {
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @PathVariable Long customerId)
+            throws IOException {
         return new ResponseEntity<>(prescriptionService.addPrescription(file, customerId), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ByteArrayResource> download(@PathVariable String id) throws IOException {
-        Prescription prescription = prescriptionService.getPrescription(id);
+        PrescriptionImage prescription = prescriptionService.getPrescription(id);
 
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(prescription.getFileType() ))
+                .contentType(MediaType.parseMediaType(prescription.getFileType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + prescription.getFileName() + "\"")
                 .body(new ByteArrayResource(prescription.getFile()));
     }
