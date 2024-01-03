@@ -20,35 +20,35 @@ public class PrescriptionOrderService {
     @Autowired
     private PrescriptionOrderRepository prescriptionOrderRepository;
 
-    //endpoints for the admin side use
+    // endpoints for the admin side use
 
-    //get all the orders
-    public List<PrescriptionOrder> getAllPrescriptionOrders(){
+    // get all the orders
+    public List<PrescriptionOrder> getAllPrescriptionOrders() {
         return prescriptionOrderRepository.findAll();
     }
 
-    //get a specific order
-    public Optional<PrescriptionOrder> getPrescriptionOrder(String prescriptionOrderId){
+    // get a specific order
+    public Optional<PrescriptionOrder> getPrescriptionOrder(String prescriptionOrderId) {
         Optional<PrescriptionOrder> prescriptionOrder = prescriptionOrderRepository.findById(prescriptionOrderId);
 
-        if(prescriptionOrder.isEmpty()){
+        if (prescriptionOrder.isEmpty()) {
             throw new ResourceNotFoundException("Order with ID " + prescriptionOrderId + " not found.");
-        }else{
+        } else {
             return prescriptionOrder;
         }
     }
 
-    //add new oder and link the related prescription in the database
-    //this will be called inside the PrescriptionService class when adding a new prescription
-    public void addNewPrescriptionOrder(PrescriptionOrder newPrescriptionOrder){
+    // add new oder and link the related prescription in the database
+    public void addNewPrescriptionOrder(PrescriptionOrder newPrescriptionOrder) {
         prescriptionOrderRepository.save(newPrescriptionOrder);
     }
 
-    //update the status of the order
-    public PrescriptionOrder updatePrescriptionOrderStatus(String prescriptionOrderId, PrescriptionOrder updatedPrescriptionOrder){
+    // update the status of the order
+    public PrescriptionOrder updatePrescriptionOrderStatus(String prescriptionOrderId,
+            PrescriptionOrder updatedPrescriptionOrder) {
         Optional<PrescriptionOrder> prescriptionOrder = prescriptionOrderRepository.findById(prescriptionOrderId);
 
-        if(prescriptionOrder.isEmpty()){
+        if (prescriptionOrder.isEmpty()) {
             throw new ResourceNotFoundException("Order with ID " + prescriptionOrderId + " not found.");
         }
 
@@ -61,11 +61,11 @@ public class PrescriptionOrderService {
         return existingPrescriptionOrder;
     }
 
-    //delete an order
-    public void deletePrescriptionOrder(String prescriptionOrderId){
+    // delete an order
+    public void deletePrescriptionOrder(String prescriptionOrderId) {
         Optional<PrescriptionOrder> prescriptionOrder = prescriptionOrderRepository.findById(prescriptionOrderId);
 
-        if(prescriptionOrder.isEmpty()){
+        if (prescriptionOrder.isEmpty()) {
             throw new ResourceNotFoundException("Order with ID " + prescriptionOrderId + " not found.");
         }
 
@@ -76,24 +76,24 @@ public class PrescriptionOrderService {
         template.delete(new Query(Criteria.where("_id").is(existingPrescriptionOrder.getPrescriptionId())));
     }
 
-    //endpoints for the customer side use
+    // endpoints for the customer side use
 
-    //get all my prescription orders
-    public List<PrescriptionOrder> getAllMyPrescriptionOrders(Long customerId){
+    // get all my prescription orders
+    public List<PrescriptionOrder> getAllMyPrescriptionOrders(Long customerId) {
         return prescriptionOrderRepository.findByCustomerId(customerId);
     }
 
-    //delete my prescription order
-    public void deleteMyPrescriptionOrder(Long customerId, String prescriptionOrderId){
+    // delete my prescription order
+    public void deleteMyPrescriptionOrder(Long customerId, String prescriptionOrderId) {
         Optional<PrescriptionOrder> prescriptionOrder = prescriptionOrderRepository.findById(prescriptionOrderId);
 
-        if(prescriptionOrder.isEmpty()){
+        if (prescriptionOrder.isEmpty()) {
             throw new ResourceNotFoundException("Order with ID " + prescriptionOrderId + " not found.");
         }
 
         PrescriptionOrder existingPrescriptionOrder = prescriptionOrder.get();
 
-        if(!(existingPrescriptionOrder.getCustomerId().equals(customerId))){
+        if (!(existingPrescriptionOrder.getCustomerId().equals(customerId))) {
             throw new ResourceNotFoundException("Order with ID " + prescriptionOrderId + " not found.");
         }
 

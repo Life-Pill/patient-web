@@ -17,6 +17,6 @@ public class Prescription {
     @Id
     private String id;
     private Long customerId;
-    private String prescriptionId;
+    private String prescriptionImageId;
     private String description;
 }

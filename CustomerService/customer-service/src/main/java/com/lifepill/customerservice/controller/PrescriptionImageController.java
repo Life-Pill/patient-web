@@ -1,7 +1,7 @@
 package com.lifepill.customerservice.controller;
 
 import com.lifepill.customerservice.model.PrescriptionImage;
-import com.lifepill.customerservice.service.PrescriptionService;
+import com.lifepill.customerservice.service.PrescriptionImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -15,9 +15,9 @@ import java.io.IOException;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("prescriptions")
-public class PrescriptionController {
+public class PrescriptionImageController {
     @Autowired
-    private PrescriptionService prescriptionService;
+    private PrescriptionImageService prescriptionService;
 
     @PostMapping("/{customerId}")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @PathVariable Long customerId)

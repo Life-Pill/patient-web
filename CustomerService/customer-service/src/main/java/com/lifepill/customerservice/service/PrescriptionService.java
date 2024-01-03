@@ -1,71 +1,89 @@
 package com.lifepill.customerservice.service;
 
-import com.lifepill.customerservice.model.PrescriptionImage;
-import com.lifepill.customerservice.model.PrescriptionOrder;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.client.gridfs.model.GridFSFile;
-import org.apache.commons.io.IOUtils;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import com.lifepill.customerservice.model.Prescription;
+import com.lifepill.customerservice.repo.PrescriptionRepository;
+import com.lifepill.customerservice.util.ResourceNotFoundException;
 
 @Service
 public class PrescriptionService {
     @Autowired
+    private PrescriptionRepository prescriptionRepository;
+
+    @Autowired
     private GridFsTemplate template;
 
-    @Autowired
-    private GridFsOperations operations;
-
-    @Autowired
-    private PrescriptionOrderService prescriptionOrderService;
-
-    // add new prescription
-    public String addPrescription(MultipartFile upload, Long customerId) throws IOException {
-
-        DBObject metadata = new BasicDBObject();
-        metadata.put("fileSize", upload.getSize());
-
-        Object fileID = template.store(upload.getInputStream(), upload.getOriginalFilename(), upload.getContentType(),
-                metadata);
-
-        PrescriptionOrder prescriptionOrder = new PrescriptionOrder(customerId, fileID.toString(), true);
-
-        prescriptionOrderService.addNewPrescriptionOrder(prescriptionOrder);
-
-        return fileID.toString();
+    // get all prescriptions
+    public List<Prescription> getAllPrescriptions(Long customerId) {
+        return prescriptionRepository.findByCustomerId(customerId);
     }
 
-    public PrescriptionImage getPrescription(String id) throws IOException {
+    // get a prescription
+    public Optional<Prescription> getPrescription(Long customerId, String prescriptionId) {
+        Optional<Prescription> prescription = prescriptionRepository.findById(prescriptionId);
 
-        GridFSFile gridFSFile = template.findOne(new Query(Criteria.where("_id").is(id)));
+        if (prescription.isEmpty()) {
+            throw new ResourceNotFoundException("Order with ID " + prescriptionId + " not found.");
+        }
 
-        PrescriptionImage prescription = new PrescriptionImage();
-
-        if (gridFSFile != null && gridFSFile.getMetadata() != null) {
-            prescription.setFileName(gridFSFile.getFilename());
-
-            prescription.setFileType(gridFSFile.getMetadata().get("_contentType").toString());
-
-            prescription.setFileSize(gridFSFile.getMetadata().get("fileSize").toString());
-
-            prescription.setFile(IOUtils.toByteArray(operations.getResource(gridFSFile).getInputStream()));
+        if (!(prescription.get().getCustomerId().equals(customerId))) {
+            throw new ResourceNotFoundException("Order with ID " + prescriptionId + " not found.");
         }
 
         return prescription;
     }
 
-    // delete a prescription
-    // this will be called inside the PrescriptionOrderService class when delete a
-    // prescription order
-    public void deletePrescription(String prescriptionId) {
-        template.delete(new Query(Criteria.where("_id").is(prescriptionId)));
+    // add new new prescription
+    // this will be called inside the PrescriptionImageService class
+    public void addNewPrescription(Prescription newPrescription) {
+        prescriptionRepository.save(newPrescription);
+    }
+
+    // update prescription
+    public Prescription updatePrescription(Long customerId, String prescriptionId, Prescription updatedPrescription) {
+        Optional<Prescription> prescription = prescriptionRepository.findById(prescriptionId);
+
+        if (prescription.isEmpty()) {
+            throw new ResourceNotFoundException("Order with ID " + prescriptionId + " not found.");
+        }
+
+        Prescription existingPrescription = prescription.get();
+
+        if (!(existingPrescription.getCustomerId().equals(customerId))) {
+            throw new ResourceNotFoundException("Order with ID " + prescriptionId + " not found.");
+        }
+
+        existingPrescription.setDescription(updatedPrescription.getDescription());
+
+        prescriptionRepository.save(existingPrescription);
+
+        return existingPrescription;
+    }
+
+    // delete prescription
+    public void deletePrescription(Long customerId, String prescriptionId) {
+        Optional<Prescription> prescription = prescriptionRepository.findById(prescriptionId);
+
+        if (prescription.isEmpty()) {
+            throw new ResourceNotFoundException("Order with ID " + prescriptionId + " not found.");
+        }
+
+        Prescription existingPrescription = prescription.get();
+
+        if (!(existingPrescription.getCustomerId().equals(customerId))) {
+            throw new ResourceNotFoundException("Order with ID " + prescriptionId + " not found.");
+        }
+
+        prescriptionRepository.deleteById(prescriptionId);
+
+        template.delete(new Query(Criteria.where("_id").is(existingPrescription.getPrescriptionImageId())));
     }
 }
