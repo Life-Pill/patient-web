@@ -4,9 +4,6 @@ import com.lifepill.customerservice.model.PrescriptionOrder;
 import com.lifepill.customerservice.repo.PrescriptionOrderRepository;
 import com.lifepill.customerservice.util.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +11,6 @@ import java.util.Optional;
 
 @Service
 public class PrescriptionOrderService {
-    @Autowired
-    private GridFsTemplate template;
 
     @Autowired
     private PrescriptionOrderRepository prescriptionOrderRepository;
@@ -69,11 +64,7 @@ public class PrescriptionOrderService {
             throw new ResourceNotFoundException("Order with ID " + prescriptionOrderId + " not found.");
         }
 
-        PrescriptionOrder existingPrescriptionOrder = prescriptionOrder.get();
-
         prescriptionOrderRepository.deleteById(prescriptionOrderId);
-
-        template.delete(new Query(Criteria.where("_id").is(existingPrescriptionOrder.getPrescriptionId())));
     }
 
     // endpoints for the customer side use
@@ -98,7 +89,5 @@ public class PrescriptionOrderService {
         }
 
         prescriptionOrderRepository.deleteById(prescriptionOrderId);
-
-        template.delete(new Query(Criteria.where("_id").is(existingPrescriptionOrder.getPrescriptionId())));
     }
 }
