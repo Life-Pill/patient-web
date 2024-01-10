@@ -38,8 +38,8 @@ public class PrescriptionOrderService {
     }
 
     // add new oder and link the related prescription in the database
-    public void addNewPrescriptionOrder(PrescriptionOrder newPrescriptionOrder) {
-        prescriptionOrderRepository.save(newPrescriptionOrder);
+    public PrescriptionOrder addNewPrescriptionOrder(PrescriptionOrder newPrescriptionOrder) {
+        return prescriptionOrderRepository.save(newPrescriptionOrder);
     }
 
     // update the selected pharmacy of the order
