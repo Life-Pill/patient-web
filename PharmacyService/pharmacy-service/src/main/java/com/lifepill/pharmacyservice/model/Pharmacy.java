@@ -34,8 +34,8 @@ public class Pharmacy {
     private String pharmacyAddressCity;
     @Column(name = "address_district", nullable = false, length = 100)
     private String pharmacyAddressDistrict;
-    @Column(name = "open_status", nullable = false)
+    @Column(name = "open_status")
     private Boolean openStatus;
-    @Column(name = "rating", nullable = false)
+    @Column(name = "rating")
     private int pharmacyRating;
 }
