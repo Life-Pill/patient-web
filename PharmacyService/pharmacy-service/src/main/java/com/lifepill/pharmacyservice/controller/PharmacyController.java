@@ -29,13 +29,13 @@ public class PharmacyController {
     }
 
     // get all pharmacies by district
-    @GetMapping("/{district}")
+    @GetMapping("/district={district}")
     public List<Pharmacy> getPharmacyByDistrict(@PathVariable String district) {
         return pharmacyService.getPharmacyByDistrict(district);
     }
 
     // get all pharmacies by city
-    @GetMapping("/{city}")
+    @GetMapping("/city={city}")
     public List<Pharmacy> getPharmacyByCity(@PathVariable String city) {
         return pharmacyService.getPharmacyByCity(city);
     }
@@ -54,19 +54,23 @@ public class PharmacyController {
 
     // update pharmacy open status
     @PutMapping("/{id}")
-    public Pharmacy updatePharmacyOpenStatus(@PathVariable Long id, @RequestBody Pharmacy updatedPharmacy) {
-        return pharmacyService.updatePharmacyOpenStatus(id, updatedPharmacy);
+    public Pharmacy updatePharmacyOpenStatus(@PathVariable Long id) {
+        return pharmacyService.updatePharmacyOpenStatus(id);
     }
 
     // delete pharmacy
     @DeleteMapping("/{id}")
-    public void deletePharmacy(@PathVariable Long id) {
+    public String deletePharmacy(@PathVariable Long id) {
         pharmacyService.deletePharmacy(id);
+
+        return "Pharmacy with the id " + id + " deleted successfully";
     }
 
     // delete all pharmacies
     @DeleteMapping
-    public void deleteAllPharmacies() {
+    public String deleteAllPharmacies() {
         pharmacyService.deleteAllPharmacies();
+
+        return "All pharmacies deleted successfully";
     }
 }

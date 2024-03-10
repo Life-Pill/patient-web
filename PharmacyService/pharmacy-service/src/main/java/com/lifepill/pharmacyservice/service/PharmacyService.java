@@ -59,7 +59,7 @@ public class PharmacyService {
             throw new MissingParameterException("Mobile Number cannot be Empty");
         }
 
-        // Empty password error handling
+        // Empty district name error handling
         if (newPharmacy.getPharmacyAddressDistrict().isEmpty()) {
             throw new MissingParameterException("Password cannot be Empty");
         }
@@ -74,11 +74,16 @@ public class PharmacyService {
             throw new MissingParameterException("Address City cannot be Empty");
         }
 
+        // Setting pharmacy open status value if it is null
+        if (newPharmacy.getOpenStatus() == null) {
+            newPharmacy.setOpenStatus(false);
+        }
+
         return pharmacyRepository.save(newPharmacy);
     }
 
     // update pharmacy open status
-    public Pharmacy updatePharmacyOpenStatus(Long id, Pharmacy updatedPharmacy) {
+    public Pharmacy updatePharmacyOpenStatus(Long id) {
         Optional<Pharmacy> pharmacy = pharmacyRepository.findById(id);
 
         if (pharmacy.isEmpty()) {
@@ -90,7 +95,7 @@ public class PharmacyService {
         // toggling the open status
         existingPharmacy.setOpenStatus(!existingPharmacy.getOpenStatus());
 
-        return existingPharmacy;
+        return pharmacyRepository.save(existingPharmacy);
     }
 
     // delete pharmacy
