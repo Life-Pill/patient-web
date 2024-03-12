@@ -8,15 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "savedPrescriptions")
+@Document(collection = "pharmacies")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Prescription {
+public class Pharmacy {
     @Id
     private String id;
-    private Long customerId;
-    private String prescriptionImageId;
-    private String description;
+    private String pharmacyName;
 }

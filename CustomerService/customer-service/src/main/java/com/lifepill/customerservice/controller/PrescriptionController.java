@@ -1,36 +1,50 @@
 package com.lifepill.customerservice.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.lifepill.customerservice.model.Prescription;
 import com.lifepill.customerservice.service.PrescriptionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("prescriptions")
 public class PrescriptionController {
     @Autowired
     private PrescriptionService prescriptionService;
 
-    @PostMapping("/{customerId}")
-    public ResponseEntity<?> upload(@RequestParam("file")MultipartFile file,@PathVariable Long customerId) throws IOException {
-        return new ResponseEntity<>(prescriptionService.addPrescription(file, customerId), HttpStatus.OK);
+    // get all orders
+    @GetMapping("/{customerId}")
+    public List<Prescription> getAllPrescriptions(@PathVariable Long customerId) {
+        return prescriptionService.getAllPrescriptions(customerId);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ByteArrayResource> download(@PathVariable String id) throws IOException {
-        Prescription prescription = prescriptionService.getPrescription(id);
+    // get a specific order
+    @GetMapping("/{customerId}/{prescriptionId}")
+    public Optional<Prescription> getPrescription(@PathVariable Long customerId, @PathVariable String prescriptionId) {
+        return prescriptionService.getPrescription(customerId, prescriptionId);
+    }
 
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(prescription.getFileType() ))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + prescription.getFileName() + "\"")
-                .body(new ByteArrayResource(prescription.getFile()));
+    // update the order status
+    @PutMapping("/{customerId}/{prescriptionId}")
+    public Prescription updatePrescription(@PathVariable Long customerId, @PathVariable String prescriptionId,
+            @RequestBody Prescription updatedPrescription) {
+        return prescriptionService.updatePrescription(customerId, prescriptionId, updatedPrescription);
+    }
+
+    // delete an order
+    @DeleteMapping("/{customerId}/{prescriptionId}")
+    public String deletePrescription(@PathVariable Long customerId, @PathVariable String prescriptionId) {
+        prescriptionService.deletePrescription(customerId, prescriptionId);
+
+        return "Order deleted successfully";
     }
 }

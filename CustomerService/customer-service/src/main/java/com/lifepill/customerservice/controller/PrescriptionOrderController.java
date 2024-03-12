@@ -2,59 +2,52 @@ package com.lifepill.customerservice.controller;
 
 import com.lifepill.customerservice.model.PrescriptionOrder;
 import com.lifepill.customerservice.service.PrescriptionOrderService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("orders")
+@RequestMapping("myOrders")
 public class PrescriptionOrderController {
     @Autowired
     private PrescriptionOrderService prescriptionOrderService;
 
-    //routes for admin side use
-
-    //get all orders
-    @GetMapping
-    public List<PrescriptionOrder> getAllPrescriptionOrders(){
-        return prescriptionOrderService.getAllPrescriptionOrders();
+    // get all my prescription orders
+    @GetMapping("/{customerId}")
+    public List<PrescriptionOrder> getAllPrescriptionOrders(@PathVariable Long customerId) {
+        return prescriptionOrderService.getAllPrescriptionOrders(customerId);
     }
 
-    //get a specific order
-    @GetMapping("/{prescriptionOrderId}")
-    public Optional<PrescriptionOrder> getPrescriptionOrders(@PathVariable String prescriptionOrderId){
-        return prescriptionOrderService.getPrescriptionOrder(prescriptionOrderId);
+    // get a specific order
+    @GetMapping("/{customerId}/{prescriptionOrderId}")
+    public Optional<PrescriptionOrder> getPrescriptionOrder(@PathVariable Long customerId,
+            @PathVariable String prescriptionOrderId) {
+        return prescriptionOrderService.getPrescriptionOrder(customerId, prescriptionOrderId);
     }
 
-    //update the order status
-    @PutMapping("/{prescriptionOrderId}")
-    public PrescriptionOrder updatePrescriptionOrderStatus(@PathVariable String prescriptionOrderId, @RequestBody PrescriptionOrder updatedPrescriptionOrder){
-        return prescriptionOrderService.updatePrescriptionOrderStatus(prescriptionOrderId, updatedPrescriptionOrder);
+    // add new oder
+    @PostMapping
+    public PrescriptionOrder addNewPrescriptionOrder(@RequestBody PrescriptionOrder newPrescriptionOrder) {
+        return prescriptionOrderService.addNewPrescriptionOrder(newPrescriptionOrder);
     }
 
-    //delete an order
-    @DeleteMapping("/{prescriptionOrderId}")
-    public String deletePrescriptionOrder(@PathVariable String prescriptionOrderId){
-        prescriptionOrderService.deletePrescriptionOrder(prescriptionOrderId);
-
-        return "Order deleted successfully";
+    // update the selected pharmacy of the order
+    @PutMapping("/{customerId}/{prescriptionOrderId}/{selectedPharmacyId}")
+    public PrescriptionOrder updatePrescriptionOrderSelectedPharmacy(@PathVariable Long customerId,
+            @PathVariable String prescriptionOrderId,
+            @PathVariable String selectedPharmacyId) {
+        return prescriptionOrderService.updatePrescriptionOrderSelectedPharmacy(customerId, prescriptionOrderId,
+                selectedPharmacyId);
     }
 
-    //routes for admin side use
+    // delete my prescription order
+    @DeleteMapping("{customerId}/{prescriptionOrderId}")
+    public String deletePrescriptionOrder(@PathVariable Long customerId, @PathVariable String prescriptionOrderId) {
+        prescriptionOrderService.deletePrescriptionOrder(customerId, prescriptionOrderId);
 
-    //get all my prescription orders
-    @GetMapping("myOrders/{customerId}")
-    public List<PrescriptionOrder> getAllPrescriptionOrders(@PathVariable Long customerId){
-        return prescriptionOrderService.getAllMyPrescriptionOrders(customerId);
-    }
-
-    //delete my prescription order
-    @DeleteMapping("myOrders/{customerId}/{prescriptionOrderId}")
-    public String deleteMyPrescriptionOrder(@PathVariable Long customerId, @PathVariable String prescriptionOrderId){
-        prescriptionOrderService.deleteMyPrescriptionOrder(customerId, prescriptionOrderId);
-
-        return "Order deleted successfully";
+        return "Prescription order deleted successfully";
     }
 }
