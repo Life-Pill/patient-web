@@ -30,7 +30,8 @@ public class MedicalRecord {
         this.updatedOn = LocalDateTime.now();
     }
 
-    public MedicalRecord(boolean subAccount, Long patientId, int patientAge, List<HealthCondition> healthConditions, List<String> allergies, List<LaboratoryTest> laboratories) {
+    public MedicalRecord(boolean subAccount, Long patientId, int patientAge, List<HealthCondition> healthConditions,
+            List<String> allergies, List<LaboratoryTest> laboratories) {
         this.subAccount = subAccount;
         this.patientId = patientId;
         this.patientAge = patientAge;
