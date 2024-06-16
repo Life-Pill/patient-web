@@ -44,7 +44,7 @@ public class PrescriptionOrderService {
 
     // update the selected pharmacy of the order
     public PrescriptionOrder updatePrescriptionOrderSelectedPharmacy(Long customerId, String prescriptionOrderId,
-            String selectedPharmacyId) {
+            Long selectedPharmacyId) {
         Optional<PrescriptionOrder> prescriptionOrder = prescriptionOrderRepository.findById(prescriptionOrderId);
 
         if (prescriptionOrder.isEmpty()) {
