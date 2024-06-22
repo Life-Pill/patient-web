@@ -43,6 +43,7 @@ public class PrescriptionImageService {
         return fileID.toString();
     }
 
+    // get prescription image
     public PrescriptionImage getPrescription(String id) throws IOException {
 
         GridFSFile gridFSFile = template.findOne(new Query(Criteria.where("_id").is(id)));
