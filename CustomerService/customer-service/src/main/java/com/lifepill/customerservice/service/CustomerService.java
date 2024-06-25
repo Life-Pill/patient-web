@@ -120,11 +120,6 @@ public class CustomerService {
             throw new MissingParameterException("Address District cannot be Empty");
         }
 
-        // Empty NIC number error handling
-        if (updatedCustomer.getCustomerNIC().isEmpty()) {
-            throw new MissingParameterException("NIC Number cannot be Empty");
-        }
-
         Customer existingCustomer = customer.get();
 
         existingCustomer.setCustomerFullName(updatedCustomer.getCustomerFullName());
