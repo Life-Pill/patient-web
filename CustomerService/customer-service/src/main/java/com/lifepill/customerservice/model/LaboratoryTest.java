@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+//@Builder
 public class LaboratoryTest {
     private String laboratoryTestName;
     private LocalDate laboratoryTestDate;

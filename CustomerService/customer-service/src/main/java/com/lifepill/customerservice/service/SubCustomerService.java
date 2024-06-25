@@ -12,8 +12,11 @@ import java.util.Optional;
 
 @Service
 public class SubCustomerService {
-    @Autowired
-    private SubCustomerRepository subCustomerRepository;
+    private final SubCustomerRepository subCustomerRepository;
+
+    public SubCustomerService(SubCustomerRepository subCustomerRepository) {
+        this.subCustomerRepository = subCustomerRepository;
+    }
 
     //get all sub customers for a particular parent
     public List<SubCustomer> getAllSubCustomers(Long id){

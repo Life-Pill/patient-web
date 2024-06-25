@@ -14,8 +14,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/medicalRecords")
 public class MedicalRecordController {
-    @Autowired
-    private MedicalRecordService medicalRecordService;
+    private final MedicalRecordService medicalRecordService;
+
+    public MedicalRecordController(MedicalRecordService medicalRecordService) {
+        this.medicalRecordService = medicalRecordService;
+    }
 
     // get a medical record
     @Tag(name = "get", description = "GET methods of Customer service API")

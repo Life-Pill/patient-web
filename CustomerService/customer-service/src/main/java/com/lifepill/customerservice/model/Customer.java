@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Table(name = "customer")
 public class Customer {
     @Id
@@ -29,18 +28,18 @@ public class Customer {
 
     @NotNull
     @Size(min = 1, max = 200)
-    @Column(name = "email", nullable = false, unique = true, length = 200)
+    @Column(name = "email", nullable = false, length = 200)
     private String customerEmail;
 
     @NotNull
     @Size(min = 3, max = 50)
-    @Column(name = "mobile_number", nullable = false, unique = true, length = 50)
+    @Column(name = "mobile_number", nullable = false, length = 50)
     private String customerMobileNumber;
 
     @NotNull
     @Size(min = 1, max = 200)
     @Column(name = "cus_password", nullable = false, length = 200)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String customerPassword;
 
     @NotNull
@@ -60,7 +59,7 @@ public class Customer {
 
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "nic", nullable = false, unique = true, length = 20)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "nic", nullable = false, length = 20)
+   // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String customerNIC;
 }

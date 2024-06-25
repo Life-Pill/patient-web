@@ -18,14 +18,17 @@ import java.io.IOException;
 
 @Service
 public class PrescriptionImageService {
-    @Autowired
-    private GridFsTemplate template;
+    private final GridFsTemplate template;
 
-    @Autowired
-    private GridFsOperations operations;
+    private final GridFsOperations operations;
 
-    @Autowired
-    private PrescriptionService prescriptionService;
+    private final PrescriptionService prescriptionService;
+
+    public PrescriptionImageService(GridFsTemplate template, GridFsOperations operations, PrescriptionService prescriptionService) {
+        this.template = template;
+        this.operations = operations;
+        this.prescriptionService = prescriptionService;
+    }
 
     // add new prescription
     public String addPrescription(MultipartFile upload, Long customerId) throws IOException {

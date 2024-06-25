@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("myOrders")
 public class PrescriptionOrderController {
-    @Autowired
-    private PrescriptionOrderService prescriptionOrderService;
+    private final PrescriptionOrderService prescriptionOrderService;
+
+    public PrescriptionOrderController(PrescriptionOrderService prescriptionOrderService) {
+        this.prescriptionOrderService = prescriptionOrderService;
+    }
 
     // get all my prescription orders
     @Tag(name = "get", description = "GET methods of Customer service API")

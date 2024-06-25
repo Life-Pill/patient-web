@@ -12,7 +12,7 @@ import java.util.List;
 @Document(collection = "medicalRecords")
 @Data
 @AllArgsConstructor
-@Builder
+//@Builder
 public class MedicalRecord {
     @Id
     private String id;

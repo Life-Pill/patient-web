@@ -20,8 +20,11 @@ import java.io.IOException;
 @CrossOrigin("*")
 @RequestMapping("prescriptionImages")
 public class PrescriptionImageController {
-    @Autowired
-    private PrescriptionImageService prescriptionService;
+    private final PrescriptionImageService prescriptionService;
+
+    public PrescriptionImageController(PrescriptionImageService prescriptionService) {
+        this.prescriptionService = prescriptionService;
+    }
 
     // add a new prescription image
     @Tag(name = "post", description = "POST methods of Customer service API")

@@ -14,8 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/subCustomers")
 public class SubCustomerController {
-    @Autowired
-    private SubCustomerService subCustomerService;
+    private final SubCustomerService subCustomerService;
+
+    public SubCustomerController(SubCustomerService subCustomerService) {
+        this.subCustomerService = subCustomerService;
+    }
 
     // get all the sub customers for a particular parent
     @Tag(name = "get", description = "GET methods of Customer service API")

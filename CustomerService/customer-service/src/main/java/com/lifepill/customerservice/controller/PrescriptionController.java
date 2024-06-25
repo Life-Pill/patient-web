@@ -21,8 +21,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("prescriptions")
 public class PrescriptionController {
-    @Autowired
-    private PrescriptionService prescriptionService;
+    private final PrescriptionService prescriptionService;
+
+    public PrescriptionController(PrescriptionService prescriptionService) {
+        this.prescriptionService = prescriptionService;
+    }
 
     // get all orders
     @Tag(name = "get", description = "GET methods of Customer service API")

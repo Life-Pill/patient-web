@@ -15,8 +15,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
-    @Autowired
-    private CustomerService customerService;
+    private final CustomerService customerService;
+
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     // get all customers
     @Tag(name = "get", description = "GET methods of Customer service API")

@@ -11,8 +11,11 @@ import java.util.Optional;
 
 @Service
 public class MedicalRecordService {
-    @Autowired
-    private MedicalRecordRepository medicalRecordRepository;
+    private final MedicalRecordRepository medicalRecordRepository;
+
+    public MedicalRecordService(MedicalRecordRepository medicalRecordRepository) {
+        this.medicalRecordRepository = medicalRecordRepository;
+    }
 
     //get a medical record
     public Optional<MedicalRecord> getMedicalRecord(Long patientId, String recordId){

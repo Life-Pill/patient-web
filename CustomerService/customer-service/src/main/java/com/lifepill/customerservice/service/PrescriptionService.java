@@ -15,11 +15,14 @@ import com.lifepill.customerservice.util.ResourceNotFoundException;
 
 @Service
 public class PrescriptionService {
-    @Autowired
-    private PrescriptionRepository prescriptionRepository;
+    private final PrescriptionRepository prescriptionRepository;
 
-    @Autowired
-    private GridFsTemplate template;
+    private final GridFsTemplate template;
+
+    public PrescriptionService(PrescriptionRepository prescriptionRepository, GridFsTemplate template) {
+        this.prescriptionRepository = prescriptionRepository;
+        this.template = template;
+    }
 
     // get all prescriptions
     public List<Prescription> getAllPrescriptions(Long customerId) {

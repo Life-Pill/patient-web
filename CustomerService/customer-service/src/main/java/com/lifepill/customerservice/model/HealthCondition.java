@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class HealthCondition {
     private String healthConditionName;
     private LocalDate treatmentStartedDate;
@@ -22,7 +21,7 @@ public class HealthCondition {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
+//    @Builder
     public static class Medication {
         private String drugName;
         private String dosage;
@@ -36,7 +35,7 @@ public class HealthCondition {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
+//    @Builder
     public static class ChannelingDetails {
         private String doctorName;
         private LocalDate lastDoctorVisit;

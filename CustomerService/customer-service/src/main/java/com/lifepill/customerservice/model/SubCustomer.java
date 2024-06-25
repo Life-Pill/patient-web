@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+//@Builder
 @Table(name = "subCustomer")
 public class SubCustomer {
     @Id
@@ -33,6 +33,6 @@ public class SubCustomer {
 
     @Size(min = 1, max = 20)
     @Column(name = "nic", nullable = true, unique = true, length = 20)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+///    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String subCustomerNIC;
 }

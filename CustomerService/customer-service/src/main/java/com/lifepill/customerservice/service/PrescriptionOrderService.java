@@ -12,8 +12,11 @@ import java.util.Optional;
 @Service
 public class PrescriptionOrderService {
 
-    @Autowired
-    private PrescriptionOrderRepository prescriptionOrderRepository;
+    private final PrescriptionOrderRepository prescriptionOrderRepository;
+
+    public PrescriptionOrderService(PrescriptionOrderRepository prescriptionOrderRepository) {
+        this.prescriptionOrderRepository = prescriptionOrderRepository;
+    }
 
     // get all my prescription orders
     public List<PrescriptionOrder> getAllPrescriptionOrders(Long customerId) {
