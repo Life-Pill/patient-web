@@ -1,5 +1,6 @@
 package com.lifepill.customerservice.service;
 
+import com.lifepill.customerservice.model.PaymentIntentDTO;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
@@ -23,12 +24,31 @@ public class StripeService {
         Stripe.apiKey = apiKey;
     }
 
-    public PaymentIntent createPaymentIntent(int amount, String currency) throws StripeException {
+    public PaymentIntentDTO createPaymentIntent(int amount, String currency) throws StripeException {
         Map<String, Object> params = new HashMap<>();
         params.put("amount", amount);
         params.put("currency", currency);
         params.put("payment_method_types", new String[] { "card" });
 
-        return PaymentIntent.create(params);
+        PaymentIntent paymentIntent = PaymentIntent.create(params);
+
+        return new PaymentIntentDTO(
+                paymentIntent.getId(),
+                paymentIntent.getClientSecret(),
+                paymentIntent.getAmount(),
+                paymentIntent.getCurrency(),
+                paymentIntent.getStatus());
+    }
+
+    public PaymentIntentDTO confirmPaymentIntent(String paymentIntentId) throws StripeException {
+        PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
+        paymentIntent.confirm();
+
+        return new PaymentIntentDTO(
+                paymentIntent.getId(),
+                paymentIntent.getClientSecret(),
+                paymentIntent.getAmount(),
+                paymentIntent.getCurrency(),
+                paymentIntent.getStatus());
     }
 }

@@ -1,5 +1,7 @@
 package com.lifepill.customerservice.controller;
 
+import com.lifepill.customerservice.model.ConfirmPaymentRequest;
+import com.lifepill.customerservice.model.PaymentIntentDTO;
 import com.lifepill.customerservice.model.PaymentRequest;
 import com.lifepill.customerservice.service.StripeService;
 import com.stripe.exception.StripeException;
@@ -23,16 +25,15 @@ public class PaymentController {
     @Tag(name = "post", description = "POST methods of Customer service API")
     @Operation(description = "Create payment intent")
     @PostMapping("/paymentIntent")
-    public PaymentIntent createPaymentIntent(@RequestBody PaymentRequest paymentRequest) throws StripeException {
+    public PaymentIntentDTO createPaymentIntent(@RequestBody PaymentRequest paymentRequest) throws StripeException {
         return stripeService.createPaymentIntent(paymentRequest.getAmount(), paymentRequest.getCurrency());
     }
 
     @Tag(name = "post", description = "POST methods of Customer service API")
     @Operation(description = "Confirm payment")
     @PostMapping("/confirmPayment")
-    public PaymentIntent confirmPayment(@RequestBody Map<String, String> paymentData) throws StripeException {
-        String paymentIntentId = paymentData.get("paymentIntentId");
-        PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
-        return paymentIntent.confirm();
+    public PaymentIntentDTO confirmPaymentIntent(@RequestBody ConfirmPaymentRequest confirmPaymentRequest)
+            throws StripeException {
+        return stripeService.confirmPaymentIntent(confirmPaymentRequest.getPaymentIntentId());
     }
 }
