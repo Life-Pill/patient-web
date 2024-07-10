@@ -40,9 +40,14 @@ public class StripeService {
                 paymentIntent.getStatus());
     }
 
-    public PaymentIntentDTO confirmPaymentIntent(String paymentIntentId) throws StripeException {
+    public PaymentIntentDTO confirmPaymentIntent(String paymentIntentId, String paymentMethodId)
+            throws StripeException {
         PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
-        paymentIntent.confirm();
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("payment_method", paymentMethodId);
+
+        paymentIntent = paymentIntent.confirm(params);
 
         return new PaymentIntentDTO(
                 paymentIntent.getId(),

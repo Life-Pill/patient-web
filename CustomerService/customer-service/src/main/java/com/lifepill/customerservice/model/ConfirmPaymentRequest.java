@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ConfirmPaymentRequest {
     private String paymentIntentId;
+    private String paymentMethodId;
 }

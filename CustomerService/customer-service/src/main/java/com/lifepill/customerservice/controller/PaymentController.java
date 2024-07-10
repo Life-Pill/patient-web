@@ -34,6 +34,7 @@ public class PaymentController {
     @PostMapping("/confirmPayment")
     public PaymentIntentDTO confirmPaymentIntent(@RequestBody ConfirmPaymentRequest confirmPaymentRequest)
             throws StripeException {
-        return stripeService.confirmPaymentIntent(confirmPaymentRequest.getPaymentIntentId());
+        return stripeService.confirmPaymentIntent(confirmPaymentRequest.getPaymentIntentId(),
+                confirmPaymentRequest.getPaymentMethodId());
     }
 }
