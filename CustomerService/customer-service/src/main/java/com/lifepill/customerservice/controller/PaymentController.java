@@ -5,12 +5,9 @@ import com.lifepill.customerservice.model.PaymentIntentDTO;
 import com.lifepill.customerservice.model.PaymentRequest;
 import com.lifepill.customerservice.service.StripeService;
 import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentIntent;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
