@@ -1,5 +1,6 @@
 package com.lifepill.customerservice.service;
 
+import com.lifepill.customerservice.model.Prescription;
 import com.lifepill.customerservice.model.PrescriptionOrder;
 import com.lifepill.customerservice.repo.PrescriptionOrderRepository;
 import com.lifepill.customerservice.util.ResourceNotFoundException;
@@ -39,12 +40,20 @@ public class PrescriptionOrderService {
 
     // add new oder and link the related prescription in the database
     public PrescriptionOrder addNewPrescriptionOrder(PrescriptionOrder newPrescriptionOrder) {
+        PrescriptionService prescriptionService = new PrescriptionService();
+
+        Optional<Prescription> prescription = prescriptionService.getPrescription(newPrescriptionOrder.getCustomerId(),
+                newPrescriptionOrder.getPrescriptionId());
+
+        String prescriptionImageId = prescription.get().getPrescriptionImageId();
+
+        newPrescriptionOrder.setPrescriptionImageId(prescriptionImageId);
         return prescriptionOrderRepository.save(newPrescriptionOrder);
     }
 
     // update the selected pharmacy of the order
     public PrescriptionOrder updatePrescriptionOrderSelectedPharmacy(Long customerId, String prescriptionOrderId,
-            String selectedPharmacyId) {
+            Long selectedPharmacyId) {
         Optional<PrescriptionOrder> prescriptionOrder = prescriptionOrderRepository.findById(prescriptionOrderId);
 
         if (prescriptionOrder.isEmpty()) {
