@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Map;
 
 @Document(collection = "prescriptionOrders")
 @Data
@@ -18,9 +18,11 @@ public class PrescriptionOrder {
     private String id;
     private Long customerId;
     private String prescriptionId;
-    private List<String> availablePharmacies;
-    private String selectedPharmacyId;
+    private String prescriptionImageId;
+    private Map<Long, String> availablePharmacies;
+    private Long selectedPharmacyId;
     private boolean orderStatus;
+    private String customerMessage;
     private LocalDateTime createdOn;
 
     public PrescriptionOrder() {

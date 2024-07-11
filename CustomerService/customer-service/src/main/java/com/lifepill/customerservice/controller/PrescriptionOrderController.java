@@ -49,7 +49,7 @@ public class PrescriptionOrderController {
     @PutMapping("/{customerId}/{prescriptionOrderId}/{selectedPharmacyId}")
     public PrescriptionOrder updatePrescriptionOrderSelectedPharmacy(@PathVariable Long customerId,
             @PathVariable String prescriptionOrderId,
-            @PathVariable String selectedPharmacyId) {
+            @PathVariable Long selectedPharmacyId) {
         return prescriptionOrderService.updatePrescriptionOrderSelectedPharmacy(customerId, prescriptionOrderId,
                 selectedPharmacyId);
     }

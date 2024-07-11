@@ -14,44 +14,44 @@ public class MedicalRecordService {
     @Autowired
     private MedicalRecordRepository medicalRecordRepository;
 
-    //get a medical record
-    public Optional<MedicalRecord> getMedicalRecord(Long patientId, String recordId){
+    // get a medical record
+    public Optional<MedicalRecord> getMedicalRecord(Long patientId, String recordId) {
         Optional<MedicalRecord> medicalRecord = medicalRecordRepository.findById(recordId);
 
-        if(medicalRecord.isEmpty()){
+        if (medicalRecord.isEmpty()) {
             throw new ResourceNotFoundException("Medical Record with ID " + recordId + " not found.");
         }
 
         MedicalRecord existingMedicalRecord = medicalRecord.get();
 
-        if(!patientId.equals(existingMedicalRecord.getPatientId())){
+        if (!patientId.equals(existingMedicalRecord.getPatientId())) {
             throw new ResourceNotFoundException("Medical Record with ID " + recordId + " not found.");
-        }else{
+        } else {
             return medicalRecord;
         }
     }
 
-    //add new medical record
-    public MedicalRecord addNewMedicalRecord(MedicalRecord newMedicalRecord){
-        //Empty patientId error handling
-        if(newMedicalRecord.getPatientId().toString().isEmpty()){
+    // add new medical record
+    public MedicalRecord addNewMedicalRecord(MedicalRecord newMedicalRecord) {
+        // Empty patientId error handling
+        if (newMedicalRecord.getPatientId().toString().isEmpty()) {
             throw new MissingParameterException("Patient ID cannot be Empty");
         }
 
         return medicalRecordRepository.save(newMedicalRecord);
     }
 
-    //update a medical record
-    public MedicalRecord updateMedicalRecord(Long patientId, String recordId, MedicalRecord updatedMedicalRecord){
+    // update a medical record
+    public MedicalRecord updateMedicalRecord(Long patientId, String recordId, MedicalRecord updatedMedicalRecord) {
         Optional<MedicalRecord> medicalRecord = medicalRecordRepository.findById(recordId);
 
-        if(medicalRecord.isEmpty()){
+        if (medicalRecord.isEmpty()) {
             throw new ResourceNotFoundException("Medical Record with ID " + recordId + " not found.");
         }
 
         MedicalRecord existingMedicalRecord = medicalRecord.get();
 
-        if(!patientId.equals(existingMedicalRecord.getPatientId())){
+        if (!patientId.equals(existingMedicalRecord.getPatientId())) {
             throw new ResourceNotFoundException("Medical Record with ID " + recordId + " not found.");
         }
 
@@ -59,8 +59,8 @@ public class MedicalRecordService {
         updatedMedicalRecord.setId(existingMedicalRecord.getId());
         updatedMedicalRecord.setCreatedOn(existingMedicalRecord.getCreatedOn());
 
-        //Empty patientId error handling
-        if(updatedMedicalRecord.getPatientId().toString().isEmpty()){
+        // Empty patientId error handling
+        if (updatedMedicalRecord.getPatientId().toString().isEmpty()) {
             throw new MissingParameterException("Patient ID cannot be Empty");
         }
 
@@ -69,17 +69,17 @@ public class MedicalRecordService {
         return updatedMedicalRecord;
     }
 
-    //delete a medical record
-    public void deleteMedicalRecord(Long patientId, String recordId){
+    // delete a medical record
+    public void deleteMedicalRecord(Long patientId, String recordId) {
         Optional<MedicalRecord> medicalRecord = medicalRecordRepository.findById(recordId);
 
-        if(medicalRecord.isEmpty()){
+        if (medicalRecord.isEmpty()) {
             throw new ResourceNotFoundException("Medical Record with ID " + recordId + " not found.");
         }
 
         MedicalRecord existingMedicalRecord = medicalRecord.get();
 
-        if(!patientId.equals(existingMedicalRecord.getPatientId())){
+        if (!patientId.equals(existingMedicalRecord.getPatientId())) {
             throw new ResourceNotFoundException("Medical Record with ID " + recordId + " not found.");
         }
 

@@ -60,7 +60,6 @@ public class Customer {
 
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "nic", nullable = false, unique = true, length = 20)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name = "nic", length = 20)
     private String customerNIC;
 }
