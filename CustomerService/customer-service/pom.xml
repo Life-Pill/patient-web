@@ -91,6 +91,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>lifepill-customer-service</finalName>
 	</build>
 
 </project>
