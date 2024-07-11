@@ -4,8 +4,8 @@ FROM openjdk:17
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the .env file into the container
-COPY .env /app
+# Copy the env.properties file into the container
+COPY env.properties /app
 
 # Copy the Maven executable JAR file into the container
 COPY target/ifepill-customer-service.jar /app
