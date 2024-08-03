@@ -14,4 +14,4 @@ COPY target/ifepill-customer-service.jar /app
 EXPOSE 8081
 
 # Command to run the application when the container starts
-CMD ["java", "-jar", "ifepill-customer-service.jar"]
+CMD ["java", "-jar", "lifepill-customer-service.jar"]
