@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mvn clean install -DskipTests
 sudo chmod 666 /var/run/docker.sock
 
 # Build the Docker image
