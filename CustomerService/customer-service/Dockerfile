@@ -8,10 +8,10 @@ WORKDIR /app
 COPY env.properties /app
 
 # Copy the Maven executable JAR file into the container
-COPY target/ifepill-customer-service.jar /app
+COPY target/lifepill-customer-service.jar /app
 
 # Expose the port your application runs on
-EXPOSE 8081
+EXPOSE 8076
 
 # Command to run the application when the container starts
 CMD ["java", "-jar", "lifepill-customer-service.jar"]
