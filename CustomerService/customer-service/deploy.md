@@ -52,12 +52,12 @@ Ensure that you have the following tools installed:
    Start the Docker container using the following command:
 
    ```bash
-   docker run -d -p 8075:8075 lifepill-customer-service
+   docker run -d -p 8076:80756lifepill-customer-service
    ```
 
    This command will:
     - Run the container in detached mode (`-d`).
-    - Map port `8075` from the container to port `8075` on your host machine.
+    - Map port `8076` from the container to port `8076` on your host machine.
 
 2. **Check running containers**:
    To verify that the container is running, use the following command:
@@ -73,7 +73,7 @@ Ensure that you have the following tools installed:
 Once the container is running, you can access the application by navigating to:
 
 ```
-http://localhost:8075
+http://localhost:8076
 ```
 
 ## Stopping the Docker Container
