@@ -52,7 +52,7 @@ Ensure that you have the following tools installed:
    Start the Docker container using the following command:
 
    ```bash
-   docker run -d -p 8076:80756lifepill-customer-service
+   docker run -d -p 8076:8076 lifepill-customer-service
    ```
 
    This command will:
